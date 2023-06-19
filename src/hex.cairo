@@ -45,8 +45,6 @@ impl ImplHexTile of IHexTile {
     fn is_neighbor(self: HexTile, other: HexTile) -> bool {
         let mut neighbors = self.neighbors();
 
-        let mut i = 0;
-
         loop {
             if (neighbors.len() == 0) {
                 break false;
@@ -58,9 +56,7 @@ impl ImplHexTile of IHexTile {
                 if (curent_neighbor.row == other.row) {
                     break true;
                 }
-            }
-
-            i += 1;
+            };
         }
     }
 }
