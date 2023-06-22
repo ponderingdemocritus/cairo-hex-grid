@@ -56,7 +56,7 @@ impl ImplTile of ITile {
 fn test_gradient() {
     let mut i = 5;
 
-    let mut tile = ImplHexTile::new(5, 5);
+    let mut tile = ImplHexTile::new(7, 5);
     tile.terrain_type().print();
     tile.col.print();
     tile.row.print();
