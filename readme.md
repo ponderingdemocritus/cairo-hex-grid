@@ -1,28 +1,38 @@
 ## Hexagonal Grid Library
 
-This library provides an efficient and simple implementation for working with hexagonal grids using doubled coordinates for flat-topped hexagons, commonly used in games and simulations.
+This library provides a simple and efficient implementation for working with hexagonal grids using an "odd-r" horizontal layout for flat-topped hexagons, commonly used in games and simulations.
 
 ## Features
 
 - Creation of hexagonal grids
-- Finding neighbors of a particular hex tile
+- Finding neighbors of a specific hex tile
 - Determining whether two hex tiles are neighbors
-- Supports flat-topped hexagons with a "doubled" coordinate system
+- Supports flat-topped hexagons with an "odd-r" horizontal layout
 
 ## Hexagonal Grid Explanation
 
-In a hexagonal grid, each hexagonal tile is associated with a coordinate (`col`, `row`). This library uses a "flat-topped" version of the hex grid with "doubled" coordinates. 
+In a hexagonal grid, each hexagonal tile is associated with a coordinate (`row`, `col`). This library uses a "flat-topped" version of the hex grid with an "odd-r" horizontal layout.
 
-This coordinate system is helpful for hexagonal grids as it allows the use of integer coordinates, and makes it easy to compute distances and find neighboring tiles. 
+This layout is beneficial for hexagonal grids as it allows for the use of integer coordinates and makes it easy to compute distances and find neighboring tiles. 
 
-In this coordinate system, an "East" movement increases the `col` by 2 and keeps the `row` the same. This is why `{ col: 7, row: 5 }` is to the east of `{ col: 5, row: 5 }`.
+In this layout, an "East" movement maintains the `row` the same and increases the `col` by 1 if the `row` is odd, or decreases `col` by 1 if the `row` is even. This is why `{ row: 5, col: 6 }` is to the east of `{ row: 5, col: 5 }`.
 
 Here's a visualization to help understand:
 
 ```
-   (4,4)  (6,4)  (8,4)
- (3,5)  (5,5)  (7,5)
-   (4,6)  (6,6)  (8,6)
+    (5,4)  (6,4)
+ (4,5)  (5,5)  (6,5)
+    (5,6)  (6,6)
 ```
 
-The `(5,5)` tile is surrounded by six neighboring tiles. For example, its 'East' neighbor is `(7,5)`, and its 'West' neighbor is `(3,5)`.
+The `(5,5)` tile is surrounded by six neighboring tiles. For example, its 'East' neighbor is `(5,6)`, and its 'West' neighbor is `(5,4)`.
+
+## Examples
+
+- [Simplex example](./src/example/noise.cairo)
+
+---
+
+### TODO:
+- Support other types of hex
+- More examples

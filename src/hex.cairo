@@ -20,12 +20,12 @@ impl ImplHexTile of IHexTile {
 
     fn neighbor(self: HexTile, direction: Direction) -> HexTile {
         match direction {
-            Direction::East(()) => HexTile { col: self.col + 2, row: self.row },
+            Direction::East(()) => HexTile { col: self.col + 1, row: self.row },
             Direction::NorthEast(()) => HexTile { col: self.col + 1, row: self.row - 1 },
             Direction::NorthWest(()) => HexTile { col: self.col, row: self.row - 1 },
-            Direction::West(()) => HexTile { col: self.col - 2, row: self.row },
-            Direction::SouthWest(()) => HexTile { col: self.col - 1, row: self.row + 1 },
-            Direction::SouthEast(()) => HexTile { col: self.col, row: self.row + 1 },
+            Direction::West(()) => HexTile { col: self.col - 1, row: self.row },
+            Direction::SouthWest(()) => HexTile { col: self.col, row: self.row + 1 },
+            Direction::SouthEast(()) => HexTile { col: self.col + 1, row: self.row + 1 },
         }
     }
 
@@ -80,7 +80,7 @@ fn test_hex_tile_neighbors() {
 
     let east_neighbor = hex_tile.neighbor(Direction::East(()));
 
-    assert(east_neighbor.col == 7, 'col should be 7');
+    assert(east_neighbor.col == 6, 'col should be 7');
     assert(east_neighbor.row == 5, 'row should be 5');
 
     let north_east_neighbor = hex_tile.neighbor(Direction::NorthEast(()));
@@ -95,17 +95,17 @@ fn test_hex_tile_neighbors() {
 
     let west_neighbor = hex_tile.neighbor(Direction::West(()));
 
-    assert(west_neighbor.col == 3, 'col should be 3');
+    assert(west_neighbor.col == 4, 'col should be 3');
     assert(west_neighbor.row == 5, 'row should be 5');
 
     let south_west_neighbor = hex_tile.neighbor(Direction::SouthWest(()));
 
-    assert(south_west_neighbor.col == 4, 'col should be 4');
+    assert(south_west_neighbor.col == 5, 'col should be 4');
     assert(south_west_neighbor.row == 6, 'row should be 6');
 
     let south_east_neighbor = hex_tile.neighbor(Direction::SouthEast(()));
 
-    assert(south_east_neighbor.col == 5, 'col should be 5');
+    assert(south_east_neighbor.col == 6, 'col should be 5');
     assert(south_east_neighbor.row == 6, 'row should be 6');
 }
 
@@ -114,15 +114,23 @@ fn test_hex_tile_neighbors() {
 fn test_is_neighbor() {
     let mut hex_tile = ImplHexTile::new(5, 5);
 
-    assert(hex_tile.is_neighbor(HexTile { col: 7, row: 5 }), 'east');
+    assert(hex_tile.is_neighbor(HexTile { col: hex_tile.col + 1, row: hex_tile.row }), 'east');
 
-    assert(hex_tile.is_neighbor(HexTile { col: 6, row: 4 }), 'north east');
+    assert(
+        hex_tile.is_neighbor(HexTile { col: hex_tile.col, row: hex_tile.row + 1 }), 'north east'
+    );
 
-    assert(hex_tile.is_neighbor(HexTile { col: 5, row: 4 }), 'north west');
+    assert(
+        hex_tile.is_neighbor(HexTile { col: hex_tile.col, row: hex_tile.row - 1 }), 'north west'
+    );
 
-    assert(hex_tile.is_neighbor(HexTile { col: 3, row: 5 }), 'west');
+    assert(hex_tile.is_neighbor(HexTile { col: hex_tile.col - 1, row: hex_tile.row }), 'west');
 
-    assert(hex_tile.is_neighbor(HexTile { col: 4, row: 6 }), 'south west');
+    assert(
+        hex_tile.is_neighbor(HexTile { col: hex_tile.col, row: hex_tile.row - 1 }), 'south west'
+    );
 
-    assert(hex_tile.is_neighbor(HexTile { col: 5, row: 6 }), 'south east');
+    assert(
+        hex_tile.is_neighbor(HexTile { col: hex_tile.col + 1, row: hex_tile.row - 1 }), 'south east'
+    );
 }
