@@ -65,7 +65,7 @@ impl ImplHexTile of IHexTile {
 
 #[test]
 #[available_gas(500000)]
-fn test_add_statistic() {
+fn test_row_col() {
     let mut hex_tile = ImplHexTile::new(5, 5);
 
     assert(hex_tile.col == 5, 'col should be 5');

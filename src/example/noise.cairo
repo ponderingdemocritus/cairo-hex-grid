@@ -19,11 +19,7 @@ mod TileType {
     const MOUNTAIN: u8 = 3;
 }
 
-trait ITile {
-    fn terrain_type(self: HexTile) -> u8;
-    fn check_moveable(self: HexTile) -> bool;
-}
-
+#[generate_trait]
 impl ImplTile of ITile {
     fn terrain_type(self: HexTile) -> u8 {
         let simplex = simplex3::noise(
@@ -35,12 +31,13 @@ impl ImplTile of ITile {
         );
 
         let mag = simplex.mag;
+        let one: u128 = ONE.try_into().unwrap();
 
-        if mag > (ONE.try_into().unwrap() * 3 / 4) {
+        if mag > (one * 3 / 4) {
             TileType::MOUNTAIN
-        } else if mag > (ONE.try_into().unwrap() * 2 / 4) {
+        } else if mag > (one * 2 / 4) {
             TileType::HILL
-        } else if mag > (ONE.try_into().unwrap() * 1 / 4) {
+        } else if mag > (one * 1 / 4) {
             TileType::LAND
         } else {
             TileType::WATER
